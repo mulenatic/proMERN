@@ -1,5 +1,16 @@
+type Issue {
+  id: Int!
+  title: String!
+  status: String!
+  owner: String
+  effort: Int
+  created: String!
+  due: String
+}
+
 type Query {
   about: String!
+  issueList: [Issue!]!
 }
 
 type Mutation {
