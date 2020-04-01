@@ -8,8 +8,16 @@ client.connect(function(err, client) {
 
     const collection = db.collection('employees');
 
-    const employee = { id: 5, name: 'A. Callback', age: 23 };
+    const employee = { id: 6, name: 'A. Callback', age: 23 };
     collection.insertOne(employee, function(err, result) {
 	console.log('Result of insert:\n', result.insertedId);
+
+
+    collection.find({ _id: result.insertedId })
+	      .toArray(function(err, docs) {
+		  console.log('Result of find:\n', docs);
+	      });
+
     });
+    
 });
