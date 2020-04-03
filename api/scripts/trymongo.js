@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
-const url = 'mongodb://mongo/issuetracker';
+const url = DB_URL;
 
 async function testWithAsync() {
 
@@ -10,7 +11,7 @@ async function testWithAsync() {
     try {
 
 	await client.connect();
-	console.log('Connected to MongoDB');
+	console.log('Connected to MongoDB URL ', url);
 	
 	const db = client.db();
 	const collection = db.collection('employees');

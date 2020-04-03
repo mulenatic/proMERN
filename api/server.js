@@ -6,7 +6,10 @@ const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
 
-const url = 'mongodb://mongo/issuetracker';
+require('dotenv').config();
+
+const url = process.env.DB_URL;
+const port = process.env.API_SERVER_PORT || 3000;
 let db;
 
 let aboutMessage = "Issue Tracker API v1.0";
@@ -104,7 +107,7 @@ apolloServer.applyMiddleware({ app, path: '/graphql' });
     try {
 	await connectToDb();
 	app.listen(3000, function () {
-	    console.log('Api Server started on port 3000');
+	    console.log(`Api Server started on port ${port}`);
 	});
     } catch(err) {
 	console.log('ERROR', err);
