@@ -1,18 +1,16 @@
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-const url = DB_URL;
+const url = process.env.DB_URL;
 
 async function testWithAsync() {
-
   console.log('\n--- testWithAsync ---\n');
   const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
   try {
-
     await client.connect();
     console.log('Connected to MongoDB URL ', url);
-    
+
     const db = client.db();
     const collection = db.collection('employees');
 
@@ -22,13 +20,11 @@ async function testWithAsync() {
 
     const docs = await collection.find({ _id: result.insertedId }).toArray();
     console.log('Result of find:\n', docs);
-
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   } finally {
     client.close();
   }
-
 }
 
 testWithAsync();
