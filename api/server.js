@@ -1,10 +1,14 @@
 const express = require('express');
+const { connectToDb } = require('./db');
+const { installHandler } = require('./api_handler');
 
 require('dotenv').config();
 
 const port = process.env.API_SERVER_PORT || 3000;
 
 const app = express();
+
+installHandler(app);
 
 (async function start() {
   try {
@@ -16,3 +20,4 @@ const app = express();
     console.log('ERROR', err);
   }
 }());
+
