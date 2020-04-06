@@ -2,9 +2,9 @@ const express = require('express');
 const { ApolloServer, UserInputError } = require('apollo-server-express');
 const fs = require('fs');
 
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
+
+const GraphQLDate = require('./graphql_date.js');
 
 require('dotenv').config();
 
@@ -13,24 +13,6 @@ const port = process.env.API_SERVER_PORT || 3000;
 let db;
 
 let aboutMessage = 'Issue Tracker API v1.0';
-
-const GraphQLDate = new GraphQLScalarType({
-  name: 'GraphQLDate',
-  description: 'A Date() type in GraphQL as a scalar',
-  serialize: value => value.toISOString(),
-  parseValue(value) {
-    const dateValue = new Date(value);
-    return Number.isNaN(dateValue.getTime()) ? undefined : dateValue;
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.STRING) {
-      const dateValue = new Date(ast.value);
-      return Number.isNan(dateValue.getTime()) ? undefined : dateValue;
-    }
-    return undefined;
-  },
-});
-
 
 function setAboutMessage(_, { message }) {
   aboutMessage = message;
