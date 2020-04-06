@@ -1,14 +1,10 @@
 const express = require('express');
-const { ApolloServer, UserInputError } = require('apollo-server-express');
+const { UserInputError } = require('apollo-server-express');
 const fs = require('fs');
-
-const { MongoClient } = require('mongodb');
 
 require('dotenv').config();
 
-const url = process.env.DB_URL;
 const port = process.env.API_SERVER_PORT || 3000;
-let db;
 
 
 async function issueList() {
@@ -29,15 +25,6 @@ function validateIssue(issue) {
   }
 }
 
-async function getNextSequence(name) {
-  const result = await db.collection('counters').findOneAndUpdate(
-    { _id: name },
-    { $inc: { current: 1 } },
-    { returnOriginal: false },
-  );
-  return result.value.current;
-}
-
 async function issueAdd(_, { issue }) {
   validateIssue(issue);
 
@@ -49,13 +36,6 @@ async function issueAdd(_, { issue }) {
   const result = await db.collection('issues').insertOne(newIssue);
   const savedIssue = await db.collection('issues').findOne({ _id: result.insertedId });
   return savedIssue;
-}
-
-async function connectToDb() {
-  const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-  await client.connect();
-  console.log(`Connected to MongoDB at ${url}`);
-  db = client.db();
 }
 
 const app = express();
