@@ -5,6 +5,7 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
 const GraphQLDate = require('./graphql_date.js');
+const about = require('./about.js');
 
 require('dotenv').config();
 
@@ -12,12 +13,6 @@ const url = process.env.DB_URL;
 const port = process.env.API_SERVER_PORT || 3000;
 let db;
 
-let aboutMessage = 'Issue Tracker API v1.0';
-
-function setAboutMessage(_, { message }) {
-  aboutMessage = message;
-  return aboutMessage;
-}
 
 async function issueList() {
   const issues = await db.collection('issues').find({}).toArray();
@@ -68,11 +63,11 @@ async function connectToDb() {
 
 const resolvers = {
   Query: {
-    about: () => aboutMessage,
+    about: about.getMessage,
     issueList,
   },
   Mutation: {
-    setAboutMessage,
+    setAboutMessage: about.setMessage,
     issueAdd,
   },
   GraphQLDate,
