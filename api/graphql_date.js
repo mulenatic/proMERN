@@ -12,7 +12,7 @@ const GraphQLDate = new GraphQLScalarType({
   parseLiteral(ast) {
     if (ast.kind === Kind.STRING) {
       const dateValue = new Date(ast.value);
-      return Number.isNan(dateValue.getTime()) ? undefined : dateValue;
+      return Number.isNaN(dateValue.getTime()) ? undefined : dateValue;
     }
     return undefined;
   },

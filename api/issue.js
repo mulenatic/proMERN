@@ -1,8 +1,8 @@
 const { UserInputError } = require('apollo-server-express');
-const { db, getNextSequence } = require('./db.js');
+const { getDb, getNextSequence } = require('./db');
 
 async function list() {
-  const issues = await db.collection('issues').find({}).toArray();
+  const issues = await getDb().collection('issues').find({}).toArray();
   return issues;
 }
 
@@ -27,8 +27,8 @@ async function add(_, { issue }) {
   newIssue.id = await getNextSequence('issues');
   if (issue.status === undefined) newIssue.status = 'New';
 
-  const result = await db.collection('issues').insertOne(newIssue);
-  const savedIssue = await db.collection('issues').findOne({ _id: result.insertedId });
+  const result = await getDb().collection('issues').insertOne(newIssue);
+  const savedIssue = await getDb().collection('issues').findOne({ _id: result.insertedId });
   return savedIssue;
 }
 
