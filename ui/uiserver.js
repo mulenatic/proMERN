@@ -12,6 +12,6 @@ const env = { UI_API_ENDPOINT };
 
 app.get('/env.js', (req, res) => res.send(`window.ENV = ${JSON.stringify(env)}`));
 
-app.listen(port, function() {
-    console.log(`UI stated on port ${port}`);
+app.listen(port, () => {
+  console.log(`UI stated on port ${port}`);
 });
