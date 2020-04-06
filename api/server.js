@@ -4,9 +4,6 @@ const fs = require('fs');
 
 const { MongoClient } = require('mongodb');
 
-const GraphQLDate = require('./graphql_date.js');
-const about = require('./about.js');
-
 require('dotenv').config();
 
 const url = process.env.DB_URL;
@@ -61,33 +58,7 @@ async function connectToDb() {
   db = client.db();
 }
 
-const resolvers = {
-  Query: {
-    about: about.getMessage,
-    issueList,
-  },
-  Mutation: {
-    setAboutMessage: about.setMessage,
-    issueAdd,
-  },
-  GraphQLDate,
-};
-
-const apolloServer = new ApolloServer({
-  typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'),
-  resolvers,
-  formatError: (error) => {
-    console.log(error);
-    return error;
-  },
-});
-
 const app = express();
-
-const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
-console.log('CORS setting: ', enableCors);
-
-apolloServer.applyMiddleware({ app, path: '/graphql', cors: enableCors });
 
 (async function start() {
   try {
