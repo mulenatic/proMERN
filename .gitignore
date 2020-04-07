@@ -106,3 +106,4 @@ dist
 *~
 package-lock.json
 ui/public/app.bundle.js
+ui/public/vendor.bundle.js
