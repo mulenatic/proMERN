@@ -8,6 +8,12 @@ async function list(_, { status }) {
   return issues;
 }
 
+async function get(_, { id }) {
+  const db = getDb();
+  const issue = db.collection('issues').findOne({ id });
+  return issue;
+}
+
 function validate(issue) {
   const errors = [];
   if (issue.title.length < 3) {
@@ -34,4 +40,4 @@ async function add(_, { issue }) {
   return savedIssue;
 }
 
-module.exports = { list, add };
+module.exports = { list, add, get };
