@@ -9,10 +9,12 @@ class IssueFilter extends React.Component {
     const params = new URLSearchParams(search);
     this.state = {
       status: params.get('status') || '',
+      changed: false,
     };
 
     this.onChangeStatus = this.onChangeStatus.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
+    this.showOriginalFilter = this.showOriginalFilter.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -24,7 +26,7 @@ class IssueFilter extends React.Component {
   }
 
   onChangeStatus(e) {
-    this.setState({ status: e.target.value });
+    this.setState({ status: e.target.value, changed: true });
   }
 
   showOriginalFilter() {
@@ -32,6 +34,7 @@ class IssueFilter extends React.Component {
     const params = new URLSearchParams(search);
     this.setState({
       status: params.get('status') || '',
+      changed: false,
     });
   }
 
@@ -45,7 +48,7 @@ class IssueFilter extends React.Component {
   }
 
   render() {
-    const { status } = this.state;
+    const { status, changed } = this.state;
     return (
       <div>
         Status:
@@ -59,6 +62,8 @@ class IssueFilter extends React.Component {
         </select>
         {' '}
         <button type="button" onClick={this.applyFilter}>Apply</button>
+        {' '}
+        <button type="button" onClick={this.showOriginalFilter} disabled={!changed}>Reset</button>
       </div>
     );
   }
