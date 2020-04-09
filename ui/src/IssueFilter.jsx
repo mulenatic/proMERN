@@ -15,8 +15,24 @@ class IssueFilter extends React.Component {
     this.applyFilter = this.applyFilter.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { location: { search } } = this.props;
+    if (prevSearch !== search) {
+      this.showOriginalFilter();
+    }
+  }
+
   onChangeStatus(e) {
     this.setState({ status: e.target.value });
+  }
+
+  showOriginalFilter() {
+    const { location: { search } } = this.props;
+    const params = new URLSearchParams(search);
+    this.setState({
+      status: params.get('status') || '',
+    });
   }
 
   applyFilter() {
