@@ -33,7 +33,11 @@ type Issue {
 type Query {
   about: String!
   issue(id: Int!): Issue!
-  issueList(status: StatusType): [Issue!]!
+  issueList(
+    status: StatusType
+    effortMin: Int
+    effortMax: Int
+  ): [Issue!]!
 }
 
 type Mutation {
