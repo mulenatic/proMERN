@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 
 import NumInput from './NumInput.jsx';
 import DateInput from './DateInput.jsx';
+<<<<<<< HEAD
 import TextInput from './TextInput.jsx';
+=======
+>>>>>>> 37fe2b2847c4aa18f6b71567dc7063f71bd23e8f
 import graphQLFetch from './graphQLFetch';
 
 export default class IssueEdit extends Component {
