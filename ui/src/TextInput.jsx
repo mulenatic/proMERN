@@ -5,7 +5,7 @@ function format(text) {
 }
 
 function unformat(text) {
-  return text.trim.length === 0 ? null : text;
+  return text.trim().length === 0 ? null : text;
 }
 
 export default class TextInput extends Component {
