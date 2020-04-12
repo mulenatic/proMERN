@@ -3,6 +3,7 @@
 import React from 'react';
 import URLSearchParams from 'url-search-params';
 import { Route } from 'react-router-dom';
+import { Panel } from 'react-bootstrap';
 
 import IssueFilter from './IssueFilter.jsx';
 import IssueTable from './IssueTable.jsx';
@@ -128,8 +129,14 @@ effort created due description
     const { match } = this.props;
     return (
       <React.Fragment>
-        <IssueFilter />
-        <hr />
+        <Panel>
+          <Panel.Heading>
+            <Panel.Title toggle>Filter</Panel.Title>
+          </Panel.Heading>
+          <Panel.Body collapsible>
+            <IssueFilter />
+          </Panel.Body>
+        </Panel>        
         <IssueTable issues={issues} closeIssue={this.closeIssue} deleteIssue={this.deleteIssue} />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
