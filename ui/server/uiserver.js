@@ -2,6 +2,8 @@ const express = require('express');
 require('dotenv').config();
 const path = require('path');
 
+const render = require('./render.js');
+
 const port = process.env.UI_SERVER_PORT || 4000;
 
 const app = express();
@@ -32,6 +34,8 @@ const UI_API_ENDPOINT = process.env.UI_API_ENDPOINT || 'http://localhost:3000/gr
 const env = { UI_API_ENDPOINT };
 
 app.get('/env.js', (req, res) => res.send(`window.ENV = ${JSON.stringify(env)}`));
+
+app.get('/about', render);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('public/index.html'));
