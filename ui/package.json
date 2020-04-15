@@ -5,13 +5,15 @@
     "main": "index.js",
     "scripts": {
         "#start": "UI server. HMR is enabled in dev mode.",
-        "start": "nodemon -w dist -w .env dist/server.js",
+        "start": "node dist/server.js",
         "#lint": "Runs ESLint on all relevant files",
         "lint": "eslint server src browser --ext js,jsx",
         "#compile": "Generates JS bundles for production. Use with start.",
         "compile": "webpack --mode production",
-        "#watch": "Compile, and recompile on any changes.",
-        "watch": "webpack --watch"
+        "#watch-server-hmr": "Recompile server HMR bundle on changes.",
+        "watch-server-hmr": "webpack -w --config webpack.serverHMR.js",
+        "#dev-all": "Dev mode: watch for server changes and start UI server",
+        "dev-all": "rm dist/* && npm run watch-server-hmr & sleep 10 && npm start"
     },
     "repository": {
         "type": "git",
@@ -50,6 +52,7 @@
         "webpack-cli": "^3.3.11",
         "webpack-dev-middleware": "^3.7.2",
         "webpack-hot-middleware": "^2.25.0",
+        "webpack-merge": "^4.2.2",
         "webpack-node-externals": "^1.7.2"
     }
 }
