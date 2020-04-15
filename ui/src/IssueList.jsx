@@ -7,7 +7,6 @@ import { Panel } from 'react-bootstrap';
 
 import IssueFilter from './IssueFilter.jsx';
 import IssueTable from './IssueTable.jsx';
-import IssueAdd from './IssueAdd.jsx';
 import IssueDetail from './IssueDetail.jsx';
 import graphQLFetch from './graphQLFetch';
 import Toast from './Toast.jsx';
@@ -22,7 +21,6 @@ export default class IssueList extends React.Component {
       toastMessage: '',
       toastType: 'info',
     };
-    this.createIssue = this.createIssue.bind(this);
     this.closeIssue = this.closeIssue.bind(this);
     this.deleteIssue = this.deleteIssue.bind(this);
     this.showSuccess = this.showSuccess.bind(this);
@@ -70,23 +68,6 @@ effortMax: $effortMax
     const data = await graphQLFetch(query, vars, this.showError);
     if (data) {
       this.setState({ issues: data.issueList });
-    }
-  }
-
-  async createIssue(issue) {
-    const query = `mutation {
-    issueAdd(issue: {
-title: "${issue.title}",
-owner: "${issue.owner}",
-due: "${issue.due.toISOString()}",
-    }) {
-id
-    }
-}`;
-
-    const data = await graphQLFetch(query, { issue }, this.showError);
-    if (data) {
-      this.loadData();
     }
   }
 
@@ -166,7 +147,6 @@ effort created due description
           </Panel.Body>
         </Panel>
         <IssueTable issues={issues} closeIssue={this.closeIssue} deleteIssue={this.deleteIssue} />
-        <IssueAdd createIssue={this.createIssue} />
         <Route path={`${match.path}/:id`} component={IssueDetail} />
         <Toast
           showing={toastVisible}
