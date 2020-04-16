@@ -11,6 +11,7 @@ export default class About extends Component {
   constructor(props) {
     super(props);
     const apiAbout = store.initialData ? store.initialData.about : null;
+    delete store.initialData;
     this.state = { apiAbout };
   }
 
@@ -26,11 +27,11 @@ export default class About extends Component {
     const { apiAbout } = this.state;
     return (
       <div className="text-center">
-      <h3>Issue Tracker version 0.9</h3>
-      <h4>
-        {apiAbout}
-      </h4>
-    </div>
+        <h3>Issue Tracker version 0.9</h3>
+        <h4>
+          {apiAbout}
+        </h4>
+      </div>
     );
   }
 }
