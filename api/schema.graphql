@@ -41,6 +41,14 @@ type Issue {
   description: String
 }
 
+type IssueCounts {
+  owner: String!
+  New: Int
+  Assigned: Int
+  Fixed: Int
+  Closed: Int
+}
+
 type Query {
   about: String!
   issue(id: Int!): Issue!
@@ -49,6 +57,11 @@ type Query {
     effortMin: Int
     effortMax: Int
   ): [Issue!]!
+  issueCounts (
+    status: StatusType
+    effortMin: Int
+    effortMax: Int
+  ): [IssueCounts!]!
 }
 
 type Mutation {
