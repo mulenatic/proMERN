@@ -148,7 +148,7 @@ effort created due description
             <Panel.Title toggle>Filter</Panel.Title>
           </Panel.Heading>
           <Panel.Body collapsible>
-            <IssueFilter />
+            <IssueFilter urlBase="/issues" />
           </Panel.Body>
         </Panel>
         <IssueTable issues={issues} closeIssue={this.closeIssue} deleteIssue={this.deleteIssue} />
