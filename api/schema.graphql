@@ -62,6 +62,7 @@ type Query {
     effortMin: Int
     effortMax: Int
     page: Int = 1
+    search: String
   ): IssueListWithPages
   issueCounts (
     status: StatusType
