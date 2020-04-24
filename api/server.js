@@ -2,11 +2,15 @@ const express = require('express');
 const { connectToDb } = require('./db');
 const { installHandler } = require('./api_handler');
 
+const auth = require('./auth.js');
+
 require('dotenv').config();
 
 const port = process.env.API_SERVER_PORT || 3000;
 
 const app = express();
+
+app.use('/auth', auth.routes);
 
 installHandler(app);
 
@@ -20,4 +24,3 @@ installHandler(app);
     console.log('ERROR', err);
   }
 }());
-
