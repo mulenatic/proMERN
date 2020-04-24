@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import SourceMapSupport from 'source-map-support';
+import proxy from 'http-proxy-middleware';
 
 import render from './render.jsx';
 
@@ -33,6 +34,11 @@ if (enableHMR && (process.env.NODE_ENV !== 'production')) {
 
 app.use(express.static('public'));
 
+const apiProxyTarget = process.env.API_PROXY_TARGET;
+if (apiProxyTarget) {
+  app.use('/graphql', proxy({ target: apiProxyTarget }));
+}
+
 if (!process.env.UI_API_ENDPOINT) {
   process.env.UI_API_ENDPOINT = 'http://localhost:3000/graphql';
 }
@@ -56,6 +62,7 @@ app.get('*', (req, res, next) => {
 app.listen(port, () => {
   console.log(`GOOGLE_CLIENT_ID: ${process.env.GOOGLE_CLIENT_ID}`);
   console.log(`UI_API_ENDPOINT: ${process.env.UI_API_ENDPOINT}`);
+  console.log(`API_PROXY_TARGET: ${process.env.API_PROXY_TARGET}`);
   console.log(`UI started on port ${port}`);
 });
 
