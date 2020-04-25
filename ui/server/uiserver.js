@@ -37,6 +37,7 @@ app.use(express.static('public'));
 const apiProxyTarget = process.env.API_PROXY_TARGET;
 if (apiProxyTarget) {
   app.use('/graphql', proxy({ target: apiProxyTarget }));
+  app.use('/auth', proxy({ target: apiProxyTarget }));
 }
 
 if (!process.env.UI_API_ENDPOINT) {
@@ -47,9 +48,14 @@ if (!process.env.UI_SERVER_API_ENDPOINT) {
   process.env.UI_SERVER_API_ENDPOINT = process.env.UI_API_ENDPOINT;
 }
 
+if (!process.env.UI_AUTH_ENDPOINT) {
+  process.env.UI_AUTH_ENDPOINT = 'http://localhost:3000/auth';
+}
+
 app.get('/env.js', (req, res) => {
   const env = {
     UI_API_ENDPOINT: process.env.UI_API_ENDPOINT,
+    UI_AUTH_ENDPOINT: process.env.UI_AUTH_ENDPOINT,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   };
   res.send(`window.ENV = ${JSON.stringify(env)}`);
@@ -60,9 +66,7 @@ app.get('*', (req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`GOOGLE_CLIENT_ID: ${process.env.GOOGLE_CLIENT_ID}`);
-  console.log(`UI_API_ENDPOINT: ${process.env.UI_API_ENDPOINT}`);
-  console.log(`API_PROXY_TARGET: ${process.env.API_PROXY_TARGET}`);
+  Object.keys(process.env).forEach(key => console.log(`${key}: ${process.env[key]}`));
   console.log(`UI started on port ${port}`);
 });
 
