@@ -11,6 +11,7 @@ import DateInput from './DateInput.jsx';
 import TextInput from './TextInput.jsx';
 import store from './store.js';
 import withToast from './withToast.jsx';
+import UserContext from './UserContext.js';
 
 import graphQLFetch from './graphQLFetch';
 
@@ -136,6 +137,8 @@ class IssueEdit extends Component {
       },
     } = this.state;
 
+    const user = this.context;
+
     return (
       <Panel>
         <Panel.Heading>
@@ -239,7 +242,13 @@ class IssueEdit extends Component {
             <FormGroup>
               <Col smOffset={3} sm={6}>
                 <ButtonToolbar>
-                  <Button bsStyle="primary" type="submit">Submit</Button>
+                  <Button
+                    disabled={!user.signedIn}
+                    bsStyle="primary"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
                   <LinkContainer to="/issues">
                     <Button bsStyle="link">Back</Button>
                   </LinkContainer>
@@ -260,6 +269,8 @@ class IssueEdit extends Component {
     );
   }
 }
+
+IssueEdit.contextType = UserContext;
 
 const IssueEditWithToast = withToast(IssueEdit);
 IssueEditWithToast.fetchData = IssueEdit.fetchData;
