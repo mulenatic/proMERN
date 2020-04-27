@@ -54,8 +54,16 @@ type IssueListWithPages {
   pages: Int
 }
 
+type User {
+  signedIn: Boolean!
+  givenName: String
+  name: String
+  email: String
+}
+
 type Query {
   about: String!
+  user: User!
   issue(id: Int!): Issue!
   issueList(
     status: StatusType

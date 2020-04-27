@@ -10,6 +10,7 @@ const auth = require('./auth.js');
 const resolvers = {
   Query: {
     about: about.getMessage,
+    user: auth.resolveUser,
     issue: issue.get,
     issueList: issue.list,
     issueCounts: issue.counts,
