@@ -19,7 +19,8 @@ if (!JWT_SECRET) {
 const routes = new Router();
 
 routes.use(bodyParser.json());
-routes.use(cors());
+const origin = process.env.UI_SERVER_ORIGIN || 'http://localhost:4000';
+routes.use(cors({ origin, credentials: true }));
 
 function getUser(req) {
   const token = req.cookies.jwt;
