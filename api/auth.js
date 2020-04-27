@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server-express');
+const cors = require('cors');
 
 let { JWT_SECRET } = process.env;
 
@@ -18,6 +19,7 @@ if (!JWT_SECRET) {
 const routes = new Router();
 
 routes.use(bodyParser.json());
+routes.use(cors());
 
 function getUser(req) {
   const token = req.cookies.jwt;
